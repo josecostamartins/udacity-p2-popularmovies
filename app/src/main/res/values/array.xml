@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- foreground color names array -->
+    <string-array name="movie_sort_title">
+        <item>Most Popular</item>
+        <item>Highest Rated</item>
+    </string-array>
+
+    <string-array name="movie_sort_values">
+        <item>popular</item>
+        <item>top_rated</item>
+    </string-array>
+</resources>

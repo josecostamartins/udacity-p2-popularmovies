@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="sort_order_key">sortOrderKey</string>
+    <string name="sort_order_title">Sort Order</string>
+    <string name="sort_order_summary">choose a sort order</string>
+</resources>
