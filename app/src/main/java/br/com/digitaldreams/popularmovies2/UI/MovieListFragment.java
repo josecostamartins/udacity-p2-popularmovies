@@ -101,7 +101,7 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
     }
 
     public ArrayList<Movies> getMovieList() {
-        FetchMovieRequest movieRequest = new FetchMovieRequest(getContext(), this);
+        FetchMovieRequest movieRequest = new FetchMovieRequest(getContext(), this, null);
         String answer = null;
         try {
             answer = movieRequest.execute().get();

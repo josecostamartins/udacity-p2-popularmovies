@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
 
     public void getMovieList() {
         try {
-            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this); //is this ok?
+            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this, null); //is this ok?
             movieRequest.execute();
         } catch (Exception e) {
             e.printStackTrace();

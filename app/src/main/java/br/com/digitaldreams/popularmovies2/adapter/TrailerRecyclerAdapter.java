@@ -6,38 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import br.com.digitaldreams.popularmovies2.R;
 import br.com.digitaldreams.popularmovies2.models.Movies;
+import br.com.digitaldreams.popularmovies2.models.Trailers;
 
 /**
- * Created by josecostamartins on 7/24/16.
+ * Created by josecostamartins on 9/10/16.
  */
-public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>{
+public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<Movies> mDataSet;
+    private ArrayList<Trailers> mDataSet;
     private Context mContext;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public ImageView mImageView;
-        public ViewHolder(View v) {
-            super(v);
-            mImageView = (ImageView) v.findViewById(R.id.movie_item_image);
-        }
-    }
 
-    public MovieRecyclerAdapter(ArrayList<Movies> mDataSet, Context mContext) {
-        /*if (mDataSet == null){
-            throw new NullPointerException("DataSet cannot be null");
-        }*/
+    public TrailerRecyclerAdapter(ArrayList<Trailers> mDataSet, Context mContext) {
+
         if (mContext == null){
             throw new NullPointerException("Context cannot be null");
         }
@@ -46,7 +33,19 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         this.mContext = mContext;
     }
 
-    public void notifyDataSetChanged(ArrayList<Movies> mDataSet){
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public TextView trailerTitle;
+        public ViewHolder(View v) {
+            super(v);
+            trailerTitle = (TextView) v.findViewById(R.id.trailer_name);
+        }
+    }
+
+    public void notifyDataSetChanged(ArrayList<Trailers> mDataSet){
         /*if (mDataSet == null){
             throw new NullPointerException("DataSet cannot be null");
         }*/
@@ -58,7 +57,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_list_item, parent, false);
+                .inflate(R.layout.trailer_list_item, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -66,12 +65,8 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Movies movie = mDataSet.get(position);
-        Picasso.with(mContext)
-                .load(movie.getMovieImageURL())
-                .placeholder(R.drawable.popcorn)
-                .error(R.drawable.caution)
-                .into(holder.mImageView);
+        Trailers trailer = mDataSet.get(position);
+        holder.trailerTitle.setText(trailer.getName());
     }
 
     @Override
@@ -81,4 +76,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         }
         return 0;
     }
+
+
 }

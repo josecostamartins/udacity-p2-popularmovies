@@ -24,6 +24,7 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
 
     private final static String LOG_TAG = FetchMovieRequest.class.getSimpleName();
     private String baseURL;
+    private boolean shouldSort;
     private String sortOrder;
     private String APIKey;
     private Context context;
@@ -32,7 +33,7 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
 
 //    public FetchMovieRequest(){}
 
-    public FetchMovieRequest(Context context, NetworkingTask listener){
+    public FetchMovieRequest(Context context, NetworkingTask listener, String URL){
         if (context == null){
             throw new NullPointerException("Context can't be null");
         }
@@ -40,7 +41,14 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
             throw new NullPointerException("Listener can't be null");
         }
 
-        this.baseURL = Movies.getBaseURL();
+        this.baseURL = URL;
+        shouldSort = false;
+        if (URL == null){
+            this.baseURL = Movies.getBaseURL();
+            shouldSort = true;
+        }
+
+
         this.APIKey = Movies.getKey();
         this.context = context;
         this.listener = listener;
@@ -90,7 +98,10 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are avaiable at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            final String MOVIE_URL = this.baseURL + "/" + this.sortOrder + "?api_key=" + this.APIKey;
+            String MOVIE_URL = this.baseURL + "?api_key=" + this.APIKey;
+            if (shouldSort) {
+                MOVIE_URL = this.baseURL + "/" + this.sortOrder + "?api_key=" + this.APIKey;
+            }
 
             URL url = new URL(MOVIE_URL);
 

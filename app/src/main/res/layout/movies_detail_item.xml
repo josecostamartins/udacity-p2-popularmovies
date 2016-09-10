@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,8 +13,9 @@
             android:id="@+id/movie_title"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:gravity="center"
+            android:text="Movie Title"
             android:textColor="@color/text"
             android:textSize="30dp" />
 
@@ -21,6 +23,8 @@
             android:id="@+id/movie_poster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="250dp"
+            android:minWidth="200dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/movie_title"
             android:layout_marginLeft="15dp"
@@ -74,5 +78,59 @@
             android:text="Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit Lorem ipsum dolor asit"
             android:textSize="15sp" />
 
+
+        <TextView
+            android:id="@+id/trailers_header"
+            android:text="Trailers"
+            android:textSize="25sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/movie_overview"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="50dp" />
+        <TextView
+            android:id="@+id/separator"
+            android:layout_below="@id/trailers_header"
+            android:layout_height="1dip"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="#000000"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/trailers_list_view"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:layout_below="@id/separator"/>
+
+
+        <TextView
+            android:id="@+id/reviews_header"
+            android:text="Trailers"
+            android:textSize="25sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/trailers_list_view"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp" />
+        <TextView
+            android:id="@+id/separator2"
+            android:layout_below="@id/reviews_header"
+            android:layout_height="1dip"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="#000000"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reviews_list_view"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:layout_below="@id/separator2"/>
+
     </RelativeLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

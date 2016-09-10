@@ -2,6 +2,7 @@ package br.com.digitaldreams.popularmovies2.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import java.util.Date;
  */
 public class Movies implements Parcelable {
 
-    private static final String key = null;
+    private static final String key = "***REMOVED***";
     private static final String baseURL = "https://api.themoviedb.org/3/movie";
 
     private static int currentPage = 0; //request
