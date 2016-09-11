@@ -2,7 +2,6 @@ package br.com.digitaldreams.popularmovies2.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +19,7 @@ import java.util.Date;
 public class Movies implements Parcelable {
 
     private static final String key = "***REMOVED***";
-    private static final String baseURL = "https://api.themoviedb.org/3/movie";
+    private static final String URL = "https://api.themoviedb.org/3/movie";
 
     private static int currentPage = 0; //request
     private static int total_results; //request
@@ -44,14 +43,14 @@ public class Movies implements Parcelable {
     private static final String[] imageSizes = {"w92", "w154", "w185", "w342", "w500", "w780", "original"};
 
     public Movies() {
-        if (baseURL == null){
+        if (URL == null){
             throw new NullPointerException("ApiKey cannot be null");
         }
 
     }
 
     public Movies(Parcel parcel) {
-        if (baseURL == null){
+        if (URL == null){
             throw new NullPointerException("ApiKey cannot be null");
         }
 
@@ -93,8 +92,8 @@ public class Movies implements Parcelable {
         return key;
     }
 
-    public static String getBaseURL() {
-        return baseURL;
+    public static String getURL() {
+        return URL;
     }
 
     public static ArrayList<Movies> parseMovieList(String json) {

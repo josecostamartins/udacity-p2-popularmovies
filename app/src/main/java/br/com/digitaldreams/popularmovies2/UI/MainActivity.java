@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
 
     public void getMovieList() {
         try {
-            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this, null); //is this ok?
+            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this, "m", null); //is this ok?
             movieRequest.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
     }
 
     @Override
-    public void onFinished(String json) {
+    public void onFinished(String json, String type) {
         movies = Movies.parseMovieList(json);
         movieRecyclerAdapter.notifyDataSetChanged(movies);
     }

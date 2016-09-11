@@ -1,7 +1,5 @@
 package br.com.digitaldreams.popularmovies2.models;
 
-import android.widget.ListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Trailers {
 
-    private static String trailerID;
+    private static String movieID;
     private String videoID;
     private String iso_639_1;
     private String iso_3166_1;
@@ -22,6 +20,7 @@ public class Trailers {
     private String site;
     private Integer size;
     private String type;
+    private static String URL;
 
     public static ArrayList<Trailers> parseTrailerList(String json) {
 
@@ -31,7 +30,7 @@ public class Trailers {
         try {
             JSONObject data = new JSONObject(json);
             JSONArray results = data.getJSONArray("results");
-            trailerID = data.getString("id");
+            movieID = data.getString("id");
 
             ArrayList<Trailers> trailersList = new ArrayList<>();
             for (int i = 0; i < results.length(); i++) {
@@ -59,12 +58,16 @@ public class Trailers {
         return null;
     }
 
-    public static String getTrailerID() {
-        return trailerID;
+    public static String getURL(Integer movieID) {
+        return "http://api.themoviedb.org/3/movie/" + movieID + "/videos";
     }
 
-    public static void setTrailerID(String trailerID) {
-        Trailers.trailerID = trailerID;
+    public static String getMovieID() {
+        return movieID;
+    }
+
+    public static void setMovieID(String movieID) {
+        Trailers.movieID = movieID;
     }
 
     public String getVideoID() {

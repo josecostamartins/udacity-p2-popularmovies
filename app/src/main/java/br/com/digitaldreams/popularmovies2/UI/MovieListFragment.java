@@ -42,10 +42,11 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null || !savedInstanceState.containsKey("movies")){
-            movies = getMovieList();
+            getMovieList();
         }
         else{
             movies = savedInstanceState.getParcelableArrayList("movies");
+            movieRecyclerAdapter.notifyDataSetChanged(movies);
         }
     }
 
@@ -100,17 +101,9 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
 
     }
 
-    public ArrayList<Movies> getMovieList() {
-        FetchMovieRequest movieRequest = new FetchMovieRequest(getContext(), this, null);
-        String answer = null;
-        try {
-            answer = movieRequest.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return Movies.parseMovieList(answer);
+    public void getMovieList() {
+        FetchMovieRequest movieRequest = new FetchMovieRequest(getContext(), this, "m", null);
+        movieRequest.execute();
     }
 
 
@@ -126,8 +119,9 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
     }
 
     @Override
-    public void onFinished(String json) {
-
+    public void onFinished(String json, String tag) {
+        movies = Movies.parseMovieList(json);
+        movieRecyclerAdapter.notifyDataSetChanged(movies);
     }
 
     @Override

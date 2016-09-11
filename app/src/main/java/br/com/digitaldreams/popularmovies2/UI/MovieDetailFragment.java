@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,8 +21,10 @@ import java.util.Calendar;
 import br.com.digitaldreams.popularmovies2.Interface.NetworkingTask;
 import br.com.digitaldreams.popularmovies2.Networking.FetchMovieRequest;
 import br.com.digitaldreams.popularmovies2.R;
+import br.com.digitaldreams.popularmovies2.adapter.ReviewRecyclerAdapter;
 import br.com.digitaldreams.popularmovies2.adapter.TrailerRecyclerAdapter;
 import br.com.digitaldreams.popularmovies2.models.Movies;
+import br.com.digitaldreams.popularmovies2.models.Reviews;
 import br.com.digitaldreams.popularmovies2.models.Trailers;
 
 
@@ -34,9 +34,11 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
     private static final String MOVIE_PARAM = "movie";
     private View mView;
     private RecyclerView trailersRecyclerView;
-    private TrailerRecyclerAdapter recyclerViewAdapter;
+    private TrailerRecyclerAdapter trailerRecyclerAdapter;
     private ArrayList<Trailers> trailersArrayList;
-    private ArrayAdapter<Trailers> itemsAdapter;
+    private RecyclerView reviewsRecyclerView;
+    private ReviewRecyclerAdapter reviewRecyclerAdapter;
+    private ArrayList<Reviews> reviewsArrayList;
 
     public MovieDetailFragment() {
         // Required empty public constructor
@@ -70,12 +72,20 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
         TextView movieOverview = (TextView) mView.findViewById(R.id.movie_overview);
 
         trailersArrayList = new ArrayList<>();
-        recyclerViewAdapter = new TrailerRecyclerAdapter(trailersArrayList, getActivity());
+        trailerRecyclerAdapter = new TrailerRecyclerAdapter(trailersArrayList, getActivity());
 
         trailersRecyclerView = (RecyclerView) mView.findViewById(R.id.trailers_list_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         trailersRecyclerView.setLayoutManager(linearLayoutManager);
-        trailersRecyclerView.setAdapter(recyclerViewAdapter);
+        trailersRecyclerView.setAdapter(trailerRecyclerAdapter);
+
+        reviewsArrayList = new ArrayList<>();
+        reviewRecyclerAdapter = new ReviewRecyclerAdapter(reviewsArrayList, getActivity());
+
+        reviewsRecyclerView = (RecyclerView) mView.findViewById(R.id.reviews_list_view);
+        LinearLayoutManager reviewsLinearLayoutManager = new LinearLayoutManager(getActivity());
+        reviewsRecyclerView.setLayoutManager(reviewsLinearLayoutManager);
+        reviewsRecyclerView.setAdapter(reviewRecyclerAdapter);
 
         movieTitle.setText(movie.getTitle());
         Picasso.with(getContext()).load(movie.getMovieImageURL())
@@ -89,6 +99,7 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
         movieOverview.setText(movie.getOverview());
 
         getMovieTrailers();
+        getMovieReviews();
 
 
         trailersRecyclerView.addOnItemTouchListener(
@@ -117,10 +128,18 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
         }
     }
 
+    public void getMovieReviews() {
+        try {
+            FetchMovieRequest movieRequest = new FetchMovieRequest(getActivity(), this, "r", movie); //is this ok?
+            movieRequest.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getMovieTrailers() {
         try {
-            String URL = "http://api.themoviedb.org/3/movie/" + movie.getId() + "/videos";
-            FetchMovieRequest movieRequest = new FetchMovieRequest(getActivity(), this, URL); //is this ok?
+            FetchMovieRequest movieRequest = new FetchMovieRequest(getActivity(), this, "t", movie); //is this ok?
             movieRequest.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,9 +147,15 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
     }
 
     @Override
-    public void onFinished(String json) {
-        trailersArrayList = Trailers.parseTrailerList(json);
-        recyclerViewAdapter.notifyDataSetChanged(trailersArrayList);
+    public void onFinished(String json, String tag) {
+        if (tag.equalsIgnoreCase("t")) {
+            trailersArrayList = Trailers.parseTrailerList(json);
+            trailerRecyclerAdapter.notifyDataSetChanged(trailersArrayList);
+        }
+        else{
+            reviewsArrayList = Reviews.parseReviewsList(json);
+            reviewRecyclerAdapter.notifyDataSetChanged(reviewsArrayList);
+        }
 
     }
 

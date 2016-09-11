@@ -2,6 +2,7 @@ package br.com.digitaldreams.popularmovies2.Networking;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,6 +17,8 @@ import java.net.URL;
 import br.com.digitaldreams.popularmovies2.Interface.NetworkingTask;
 import br.com.digitaldreams.popularmovies2.R;
 import br.com.digitaldreams.popularmovies2.models.Movies;
+import br.com.digitaldreams.popularmovies2.models.Reviews;
+import br.com.digitaldreams.popularmovies2.models.Trailers;
 
 /**
  * Created by josecostamartins on 7/25/16.
@@ -24,27 +27,40 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
 
     private final static String LOG_TAG = FetchMovieRequest.class.getSimpleName();
     private String baseURL;
-    private boolean shouldSort;
+    private boolean shouldSort = false;
     private String sortOrder;
     private String APIKey;
     private Context context;
     private NetworkingTask listener;
+    private String type;
 
 
-//    public FetchMovieRequest(){}
-
-    public FetchMovieRequest(Context context, NetworkingTask listener, String URL){
+    public FetchMovieRequest(Context context, NetworkingTask listener, String tag, Movies movie){
         if (context == null){
             throw new NullPointerException("Context can't be null");
         }
         if (listener == null) {
             throw new NullPointerException("Listener can't be null");
         }
+        if (tag == null) {
+            throw new NullPointerException("Type can't be null");
+        }
 
-        this.baseURL = URL;
-        shouldSort = false;
-        if (URL == null){
-            this.baseURL = Movies.getBaseURL();
+
+        if (tag.equalsIgnoreCase("t")){
+            if (movie == null) {
+                throw new NullPointerException("Class can't be null");
+            }
+            this.baseURL = Trailers.getURL(movie.getId());
+        }
+        else if (tag.equalsIgnoreCase("r")){
+            if (movie == null) {
+                throw new NullPointerException("Class can't be null");
+            }
+            this.baseURL = Reviews.getURL(movie.getId());
+        }
+        else { //defaults to movie
+            this.baseURL = Movies.getURL();
             shouldSort = true;
         }
 
@@ -52,6 +68,7 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
         this.APIKey = Movies.getKey();
         this.context = context;
         this.listener = listener;
+        this.type = tag;
 
         SharedPreferences sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -67,7 +84,7 @@ public class FetchMovieRequest extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        listener.onFinished(s);
+        listener.onFinished(s, type);
 
     }
 

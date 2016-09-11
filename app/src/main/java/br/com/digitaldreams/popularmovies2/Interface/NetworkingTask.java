@@ -5,7 +5,7 @@ package br.com.digitaldreams.popularmovies2.Interface;
  */
 public interface NetworkingTask {
 
-    public void onFinished(String json);
+    public void onFinished(String json, String type);
     public void onProgress(Double percentage);
 
 }
