@@ -44,6 +44,17 @@
             android:text="2016"
             android:textSize="30sp" />
 
+        <ImageButton android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/movie_year"
+            android:layout_below="@id/movie_title"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:src="@android:drawable/btn_star"
+            android:background="#00ffffff"
+            android:onClick="onToggleStar"/>
+
         <TextView
             android:id="@+id/movie_length"
             android:layout_width="wrap_content"
