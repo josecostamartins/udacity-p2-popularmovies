@@ -5,25 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import br.com.digitaldreams.popularmovies2.R;
-import br.com.digitaldreams.popularmovies2.models.Movies;
-import br.com.digitaldreams.popularmovies2.models.Trailers;
+import br.com.digitaldreams.popularmovies2.models.Trailer;
 
 /**
  * Created by josecostamartins on 9/10/16.
  */
 public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<Trailers> mDataSet;
+    private ArrayList<Trailer> mDataSet;
     private Context mContext;
 
 
-    public TrailerRecyclerAdapter(ArrayList<Trailers> mDataSet, Context mContext) {
+    public TrailerRecyclerAdapter(ArrayList<Trailer> mDataSet, Context mContext) {
 
         if (mContext == null){
             throw new NullPointerException("Context cannot be null");
@@ -45,7 +43,7 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
         }
     }
 
-    public void notifyDataSetChanged(ArrayList<Trailers> mDataSet){
+    public void notifyDataSetChanged(ArrayList<Trailer> mDataSet){
         /*if (mDataSet == null){
             throw new NullPointerException("DataSet cannot be null");
         }*/
@@ -65,7 +63,7 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Trailers trailer = mDataSet.get(position);
+        Trailer trailer = mDataSet.get(position);
         holder.trailerTitle.setText(trailer.getName());
     }
 

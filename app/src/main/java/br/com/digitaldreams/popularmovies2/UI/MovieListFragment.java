@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-import br.com.digitaldreams.popularmovies2.Interface.NetworkingTask;
+import br.com.digitaldreams.popularmovies2.models.Movie;
+import br.com.digitaldreams.popularmovies2.Networking.NetworkingTask;
 import br.com.digitaldreams.popularmovies2.Networking.FetchMovieRequest;
 import br.com.digitaldreams.popularmovies2.R;
 import br.com.digitaldreams.popularmovies2.adapter.MovieRecyclerAdapter;
-import br.com.digitaldreams.popularmovies2.models.Movies;
 
 /**
  * This class is no longer being used
@@ -30,7 +29,7 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
     private RecyclerView movieRecyclerView;
     private MovieRecyclerAdapter movieRecyclerAdapter;
     private View mView;
-    private ArrayList<Movies> movies;
+    private ArrayList<Movie> movies;
     private boolean mTwoPane = false;
 
 
@@ -80,7 +79,7 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
                 new RecyclerItemClickListener(getActivity(), movieRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         if (mTwoPane){
-                            Movies movie = movies.get(position);
+                            Movie movie = movies.get(position);
 
                             MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(movie);
                             getActivity().getSupportFragmentManager().beginTransaction()
@@ -120,7 +119,7 @@ public class MovieListFragment extends Fragment implements NetworkingTask{
 
     @Override
     public void onFinished(String json, String tag) {
-        movies = Movies.parseMovieList(json);
+        movies = Movie.parseMovieList(json);
         movieRecyclerAdapter.notifyDataSetChanged(movies);
     }
 

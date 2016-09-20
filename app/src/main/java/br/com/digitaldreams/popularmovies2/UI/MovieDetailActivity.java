@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import br.com.digitaldreams.popularmovies2.R;
-import br.com.digitaldreams.popularmovies2.models.Movies;
+import br.com.digitaldreams.popularmovies2.models.Movie;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -15,7 +15,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null){
-            Movies movie = getIntent().getParcelableExtra("movie");
+            Movie movie = getIntent().getParcelableExtra("movie");
 
             MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(movie);
             getSupportFragmentManager().beginTransaction()

@@ -1,4 +1,4 @@
-package br.com.digitaldreams.popularmovies2.Interface;
+package br.com.digitaldreams.popularmovies2.Networking;
 
 /**
  * Created by josecostamartins on 7/25/16.

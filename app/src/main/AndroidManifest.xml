@@ -20,6 +20,12 @@
         </activity>
         <activity android:name=".UI.MovieDetailActivity" />
         <activity android:name=".UI.SettingsActivity"></activity>
+        <provider
+            android:name=".data.MovieProvider"
+            android:authorities="br.com.digitaldreams.popularmovies2"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>

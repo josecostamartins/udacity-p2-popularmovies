@@ -1,7 +1,10 @@
 package br.com.digitaldreams.popularmovies2.UI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,21 +14,19 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import br.com.digitaldreams.popularmovies2.Interface.NetworkingTask;
+import br.com.digitaldreams.popularmovies2.data.PopularMovieContract;
+import br.com.digitaldreams.popularmovies2.models.Movie;
+import br.com.digitaldreams.popularmovies2.Networking.NetworkingTask;
 import br.com.digitaldreams.popularmovies2.Networking.FetchMovieRequest;
 import br.com.digitaldreams.popularmovies2.R;
 import br.com.digitaldreams.popularmovies2.adapter.MovieRecyclerAdapter;
-import br.com.digitaldreams.popularmovies2.models.Movies;
 
-public class MainActivity extends AppCompatActivity implements NetworkingTask{
-
+public class MainActivity extends AppCompatActivity implements NetworkingTask, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private boolean mTwoPane = false;
     //    MovieListFragment movieListFragment;
-    private ArrayList<Movies> movies;
-    private GridLayoutManager movieGridLayout;
-    private RecyclerView movieRecyclerView;
+    private ArrayList<Movie> movies;
     private MovieRecyclerAdapter movieRecyclerAdapter;
 
     @Override
@@ -34,12 +35,16 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
             getMovieList();
         } else {
             movies = savedInstanceState.getParcelableArrayList("movies");
         }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
 
 //        if (savedInstanceState == null) { // first time loading this activity
 
@@ -59,11 +64,11 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
 //                .commit();
 //        }
 
-        movieRecyclerView = (RecyclerView) findViewById(R.id.movies_list);
+        RecyclerView movieRecyclerView = (RecyclerView) findViewById(R.id.movies_list);
         movieRecyclerView.setHasFixedSize(true);
 
         int spanCount = getResources().getInteger(R.integer.span_count);
-        movieGridLayout = new GridLayoutManager(this, spanCount);
+        GridLayoutManager movieGridLayout = new GridLayoutManager(this, spanCount);
 
         movieRecyclerAdapter = new MovieRecyclerAdapter(movies, this);
 
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
                     @Override
                     public void onItemClick(View view, int position) {
                         if (mTwoPane) {
-                            Movies movie = movies.get(position);
+                            Movie movie = movies.get(position);
 
                             MovieDetailFragment movieDetailFragment = MovieDetailFragment.newInstance(movie);
                             getSupportFragmentManager().beginTransaction()
@@ -129,17 +134,33 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
     }
 
     public void getMovieList() {
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String tag = sharedPrefs.getString(this.getString(R.string.sort_order_key), "popular");
+
+        if (!tag.equalsIgnoreCase("favorite")) {
+            tag = "m";
+        }
+
         try {
-            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this, "m", null); //is this ok?
+            FetchMovieRequest movieRequest = new FetchMovieRequest(this, this, tag, null); //is this ok?
             movieRequest.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
-    public void onFinished(String json, String type) {
-        movies = Movies.parseMovieList(json);
+    public void onFinished(String json, String tag) {
+        if (tag.equalsIgnoreCase("favorite")) {
+            Cursor cursor = this.getContentResolver().query(PopularMovieContract.MovieEntry.CONTENT_URI,
+                    Movie.movieProjection(), null, null, null);
+
+            movies = Movie.getMovies(cursor);
+        } else {
+            movies = Movie.parseMovieList(json);
+        }
         movieRecyclerAdapter.notifyDataSetChanged(movies);
     }
 
@@ -151,6 +172,10 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask{
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         getMovieList();
     }
 }

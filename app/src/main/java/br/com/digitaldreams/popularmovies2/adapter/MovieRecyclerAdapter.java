@@ -12,14 +12,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import br.com.digitaldreams.popularmovies2.R;
-import br.com.digitaldreams.popularmovies2.models.Movies;
+import br.com.digitaldreams.popularmovies2.models.Movie;
 
 /**
  * Created by josecostamartins on 7/24/16.
  */
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<Movies> mDataSet;
+    private ArrayList<Movie> mDataSet;
     private Context mContext;
 
     // Provide a reference to the views for each data item
@@ -34,7 +34,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         }
     }
 
-    public MovieRecyclerAdapter(ArrayList<Movies> mDataSet, Context mContext) {
+    public MovieRecyclerAdapter(ArrayList<Movie> mDataSet, Context mContext) {
         /*if (mDataSet == null){
             throw new NullPointerException("DataSet cannot be null");
         }*/
@@ -46,7 +46,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         this.mContext = mContext;
     }
 
-    public void notifyDataSetChanged(ArrayList<Movies> mDataSet){
+    public void notifyDataSetChanged(ArrayList<Movie> mDataSet){
         /*if (mDataSet == null){
             throw new NullPointerException("DataSet cannot be null");
         }*/
@@ -66,7 +66,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Movies movie = mDataSet.get(position);
+        Movie movie = mDataSet.get(position);
         Picasso.with(mContext)
                 .load(movie.getMovieImageURL())
                 .placeholder(R.drawable.popcorn)

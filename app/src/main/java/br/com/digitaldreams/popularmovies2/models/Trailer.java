@@ -9,9 +9,9 @@ import java.util.ArrayList;
 /**
  * Created by josecostamartins on 9/3/16.
  */
-public class Trailers {
+public class Trailer {
 
-    private static String movieID;
+    private String movieID;
     private String videoID;
     private String iso_639_1;
     private String iso_3166_1;
@@ -22,7 +22,7 @@ public class Trailers {
     private String type;
     private static String URL;
 
-    public static ArrayList<Trailers> parseTrailerList(String json) {
+    public static ArrayList<Trailer> parseTrailerList(String json) {
 
         if (json == null) {
             return null;
@@ -30,26 +30,26 @@ public class Trailers {
         try {
             JSONObject data = new JSONObject(json);
             JSONArray results = data.getJSONArray("results");
-            movieID = data.getString("id");
 
-            ArrayList<Trailers> trailersList = new ArrayList<>();
+            ArrayList<Trailer> trailerList = new ArrayList<>();
             for (int i = 0; i < results.length(); i++) {
                 JSONObject current = results.getJSONObject(i);
-                Trailers trailers = new Trailers();
-                trailers.setVideoID(current.optString("id"));
-                trailers.setIso_639_1(current.optString("iso_639_1"));
-                trailers.setIso_3166_1(current.optString("iso_3166_1"));
-                trailers.setKey(current.optString("key"));
-                trailers.setName(current.optString("name"));
-                trailers.setSite(current.optString("site"));
-                trailers.setSize(current.optInt("size", 0));
-                trailers.setType(current.optString("type"));
+                Trailer trailer = new Trailer();
+                trailer.setMovieID(data.getString("id"));
+                trailer.setVideoID(current.optString("id"));
+                trailer.setIso_639_1(current.optString("iso_639_1"));
+                trailer.setIso_3166_1(current.optString("iso_3166_1"));
+                trailer.setKey(current.optString("key"));
+                trailer.setName(current.optString("name"));
+                trailer.setSite(current.optString("site"));
+                trailer.setSize(current.optInt("size", 0));
+                trailer.setType(current.optString("type"));
 
 //                movies.setGenreIds();
-                trailersList.add(trailers);
+                trailerList.add(trailer);
             }
 
-            return trailersList;
+            return trailerList;
 
 
         } catch (JSONException e) {
@@ -62,12 +62,12 @@ public class Trailers {
         return "http://api.themoviedb.org/3/movie/" + movieID + "/videos";
     }
 
-    public static String getMovieID() {
+    public String getMovieID() {
         return movieID;
     }
 
-    public static void setMovieID(String movieID) {
-        Trailers.movieID = movieID;
+    public void setMovieID(String movieID) {
+        this.movieID = movieID;
     }
 
     public String getVideoID() {
