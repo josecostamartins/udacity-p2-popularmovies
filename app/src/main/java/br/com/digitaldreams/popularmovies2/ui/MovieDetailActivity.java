@@ -13,9 +13,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         if (savedInstanceState == null){
             Movie movie = getIntent().getParcelableExtra("movie");
 

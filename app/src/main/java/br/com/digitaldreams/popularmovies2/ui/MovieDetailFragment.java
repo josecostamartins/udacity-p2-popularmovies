@@ -90,7 +90,7 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
                 new String[]{movie.getId().toString()},
                 null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             movieIsFavorite = true;
             favoriteButton.setActivated(true);
         }
@@ -130,7 +130,7 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
                 new RecyclerItemClickListener(getActivity(), trailersRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                    watchYoutubeVideo(trailerArrayList.get(position).getKey());
+                        watchYoutubeVideo(trailerArrayList.get(position).getKey());
                     }
                 })
         );
@@ -139,8 +139,8 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
             @Override
             public void onClick(View view) {
 
-                if (movieIsFavorite){
-                   int id = getActivity().getContentResolver().delete(PopularMovieContract.MovieEntry.CONTENT_URI,
+                if (movieIsFavorite) {
+                    int id = getActivity().getContentResolver().delete(PopularMovieContract.MovieEntry.CONTENT_URI,
                             PopularMovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?",
                             new String[]{movie.getId().toString()});
 
@@ -149,8 +149,7 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
                         movieIsFavorite = false;
                         favoriteButton.setActivated(false);
                     }
-                }
-                else {
+                } else {
                     Uri insertedUri = getActivity().getContentResolver().insert(PopularMovieContract.MovieEntry.CONTENT_URI,
                             movie.getMovieContentValues());
 
@@ -203,8 +202,7 @@ public class MovieDetailFragment extends Fragment implements NetworkingTask {
         if (tag.equalsIgnoreCase("t")) {
             trailerArrayList = Trailer.parseTrailerList(json);
             trailerRecyclerAdapter.notifyDataSetChanged(trailerArrayList);
-        }
-        else{
+        } else {
             reviewsArrayList = Reviews.parseReviewsList(json);
             reviewRecyclerAdapter.notifyDataSetChanged(reviewsArrayList);
         }

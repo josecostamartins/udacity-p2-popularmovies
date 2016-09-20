@@ -23,7 +23,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.SettingsActivity"></activity>
+        <activity android:name=".ui.SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
         <provider
             android:name=".data.MovieProvider"
             android:authorities="br.com.digitaldreams.popularmovies2"

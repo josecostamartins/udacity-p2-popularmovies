@@ -1,12 +1,13 @@
 package br.com.digitaldreams.popularmovies2.ui;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
 import br.com.digitaldreams.popularmovies2.R;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +23,21 @@ public class SettingsActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-        /*
-            public void addPreferencesFromResource (int preferencesResId)
-                Inflates the given XML resource and adds the preference hierarchy to the
-                current preference hierarchy.
-
-            Parameters
-                preferencesResId : The XML resource ID to inflate.
-        */
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if (!super.onOptionsItemSelected(item)) {
+                NavUtils.navigateUpFromSameTask(this);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

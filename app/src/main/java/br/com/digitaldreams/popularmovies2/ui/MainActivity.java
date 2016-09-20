@@ -98,6 +98,17 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask, S
 
     }
 
+    private void checkFragment(){
+
+        MovieDetailFragment movieDetailFragment = (MovieDetailFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details_two_pane_fragment);
+        if (movieDetailFragment == null || !movieDetailFragment.isAdded()) {
+            movieDetailFragment = MovieDetailFragment.newInstance(movies.get(0));
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_details_two_pane_fragment, movieDetailFragment)
+                    .commit();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -162,6 +173,8 @@ public class MainActivity extends AppCompatActivity implements NetworkingTask, S
             movies = Movie.parseMovieList(json);
         }
         movieRecyclerAdapter.notifyDataSetChanged(movies);
+        checkFragment();
+
     }
 
     @Override
