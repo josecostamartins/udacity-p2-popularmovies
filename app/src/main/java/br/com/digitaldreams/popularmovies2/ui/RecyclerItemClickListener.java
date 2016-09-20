@@ -1,4 +1,4 @@
-package br.com.digitaldreams.popularmovies2.UI;
+package br.com.digitaldreams.popularmovies2.ui;
 
 /**
  * Created by josecostamartins on 8/6/16.

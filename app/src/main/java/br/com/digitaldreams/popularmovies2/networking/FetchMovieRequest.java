@@ -1,4 +1,4 @@
-package br.com.digitaldreams.popularmovies2.Networking;
+package br.com.digitaldreams.popularmovies2.networking;
 
 import android.content.Context;
 import android.content.SharedPreferences;

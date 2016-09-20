@@ -1,4 +1,4 @@
-package br.com.digitaldreams.popularmovies2.UI;
+package br.com.digitaldreams.popularmovies2.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 import br.com.digitaldreams.popularmovies2.data.PopularMovieContract;
 import br.com.digitaldreams.popularmovies2.models.Movie;
-import br.com.digitaldreams.popularmovies2.Networking.NetworkingTask;
-import br.com.digitaldreams.popularmovies2.Networking.FetchMovieRequest;
+import br.com.digitaldreams.popularmovies2.networking.NetworkingTask;
+import br.com.digitaldreams.popularmovies2.networking.FetchMovieRequest;
 import br.com.digitaldreams.popularmovies2.R;
 import br.com.digitaldreams.popularmovies2.adapter.MovieRecyclerAdapter;
 

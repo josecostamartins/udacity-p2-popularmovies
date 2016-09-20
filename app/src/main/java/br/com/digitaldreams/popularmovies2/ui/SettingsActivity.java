@@ -1,4 +1,4 @@
-package br.com.digitaldreams.popularmovies2.UI;
+package br.com.digitaldreams.popularmovies2.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
