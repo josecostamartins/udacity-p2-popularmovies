@@ -1,6 +1,6 @@
 # udacity-p2-popularmovies
 
-Please change api key in br.com.digitaldreams.popularmovies.models.Movies,
+Please change api key in br.com.digitaldreams.popularmovies2.models.Movies,
 
 change from:
 
