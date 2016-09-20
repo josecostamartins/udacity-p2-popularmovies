@@ -42,3 +42,7 @@ captures/
 
 #BFG remove passwords 
 passwords.txt
+
+# android studio upgrade version
+projectFilesBackup/
+
